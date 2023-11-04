@@ -20,14 +20,16 @@ db.authenticate()
     console.log('DB Connected');
   })
   .catch(err => {
-    console.error(`Error 💥: ${err.original.sqlMessage}`);
+    console.error(`Error 💥: ${err}`);
     // throw new AppError(err.original.sqlMessage, 500);
   });
 // console.error(`Error 💥: ${err.original.sqlMessage}`);
 
-db.sync().catch(err => {
-  console.error(err);
-});
+db.sync()
+  .then(() => console.log('Database is synchronized with the models'))
+  .catch(err => {
+    console.error(err);
+  });
 
 //sync tables
 const port = process.env.PORT || 8000;
