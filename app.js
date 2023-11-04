@@ -42,6 +42,9 @@ app.use(compression());
 
 // routes
 // app.use('/api/v1/users', userRoutes);
+app.get('/', (req, res) => {
+  res.json({ message: 'Few u got heres' });
+});
 
 //if no routes found
 app.all('*', (req, res, next) => {
