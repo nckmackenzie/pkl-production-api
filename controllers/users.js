@@ -3,6 +3,8 @@ const catchAsync = require('../utils/catch-async');
 const User = require('../models/user');
 const AppError = require('../utils/AppError');
 
+const attributes = ['id', 'user_id', 'name', 'role', 'department_id'];
+
 function signAndSend(user, res, status) {
   const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
     algorithm: 'HS256',
@@ -30,7 +32,7 @@ const login = catchAsync(async (req, res, next) => {
   }
 
   const user = await User.findOne({
-    attributes: ['id', 'user_id', 'name', 'role', 'password'],
+    attributes: [...attributes, 'password'],
     where: { user_id: req.body.user_id },
   });
   if (!user || !(await user.verifyPassword(req.body.password, user.password))) {
@@ -42,4 +44,12 @@ const login = catchAsync(async (req, res, next) => {
   signAndSend(user, res, 200);
 });
 
-module.exports = { createUser, login };
+const getLoggedUser = catchAsync(async (req, res, next) => {
+  if (!req.user_id) return next(new AppError('Log in again', 401));
+
+  const user = await User.findByPk(req.user_id, { attributes });
+
+  res.status(200).json({ status: 'success', user });
+});
+
+module.exports = { createUser, login, getLoggedUser };

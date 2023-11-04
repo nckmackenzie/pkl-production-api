@@ -8,6 +8,7 @@ const rateLimit = require('express-rate-limit');
 const userRoutes = require('./routes/user-routes');
 const AppError = require('./utils/AppError');
 const globalErrorHandler = require('./controllers/error-controller');
+const verifyToken = require('./controllers/token-verify');
 
 const app = express();
 
@@ -40,12 +41,10 @@ app.use(hpp());
 
 app.use(compression());
 
+app.use(verifyToken);
+
 // routes
 app.use('/api/v1/users', userRoutes);
-
-// app.get('/', (req, res) => {
-//   res.json({ message: 'Few u got heres' });
-// });
 
 //if no routes found
 app.all('*', (req, res, next) => {
@@ -54,8 +53,5 @@ app.all('*', (req, res, next) => {
 
 //global error handling middleware
 app.use(globalErrorHandler);
-// app.use((err, req, res, next) => {
-//   // This middleware will be called when an error is passed to next
-//   res.status(500).json({ error: err.message });
-// });
+
 module.exports = app;
