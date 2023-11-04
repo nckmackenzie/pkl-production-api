@@ -12,22 +12,22 @@ dotenv.config({ path: './config.env' });
 
 const app = require('./app');
 
-// const db = require('./utils/database');
+const db = require('./utils/database');
 
 //db connection
-// db.authenticate()
-//   .then(() => {
-//     console.log('DB Connected');
-//   })
-//   .catch(err => {
-//     console.error(`Error 💥: ${err.original.sqlMessage}`);
-//     // throw new AppError(err.original.sqlMessage, 500);
-//   });
-// // console.error(`Error 💥: ${err.original.sqlMessage}`);
+db.authenticate()
+  .then(() => {
+    console.log('DB Connected');
+  })
+  .catch(err => {
+    console.error(`Error 💥: ${err.original.sqlMessage}`);
+    // throw new AppError(err.original.sqlMessage, 500);
+  });
+// console.error(`Error 💥: ${err.original.sqlMessage}`);
 
-// db.sync().catch(err => {
-//   console.error(err);
-// });
+db.sync().catch(err => {
+  console.error(err);
+});
 
 //sync tables
 const port = process.env.PORT || 8000;
