@@ -6,8 +6,8 @@ const cors = require('cors');
 const compression = require('compression');
 const rateLimit = require('express-rate-limit');
 // const userRoutes = require('./routes/userRoutes');
-// const AppError = require('./utils/AppError');
-// const globalErrorHandler = require('./controllers/errorController');
+const AppError = require('./utils/AppError');
+const globalErrorHandler = require('./controllers/error-controller');
 
 const app = express();
 
@@ -48,10 +48,10 @@ app.get('/', (req, res) => {
 
 //if no routes found
 app.all('*', (req, res, next) => {
-  //   next(new AppError(`No routes found for ${req.originalUrl}`, 404));
+  next(new AppError(`No routes found for ${req.originalUrl}`, 404));
 });
 
 //global error handling middleware
-// app.use(globalErrorHandler);
+app.use(globalErrorHandler);
 
 module.exports = app;
