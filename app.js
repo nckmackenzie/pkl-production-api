@@ -10,7 +10,6 @@ const jobcardRoutes = require('./routes/jobcard');
 const AppError = require('./utils/AppError');
 const globalErrorHandler = require('./controllers/error-controller');
 const verifyToken = require('./controllers/token-verify');
-
 const app = express();
 
 app.use(cors());

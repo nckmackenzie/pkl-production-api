@@ -1,5 +1,7 @@
+const { QueryTypes } = require('sequelize');
 const Jobcard = require('../models/jobcard');
 const JobcardHour = require('../models/jobcardhour');
+const { getJobCardSql } = require('../models/raw_queries/jobcards');
 const AppError = require('../utils/AppError');
 const catchAsync = require('../utils/catch-async');
 const db = require('../utils/database');
@@ -77,4 +79,9 @@ const createJobcard = catchAsync(async (req, res, next) => {
   }
 });
 
-module.exports = { createJobcard };
+const getJobCards = catchAsync(async (req, res, next) => {
+  const jobcards = await db.query(getJobCardSql(), { type: QueryTypes.SELECT });
+  res.status(200).json({ status: 'success', data: jobcards });
+});
+
+module.exports = { createJobcard, getJobCards };
