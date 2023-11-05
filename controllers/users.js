@@ -8,7 +8,7 @@ const attributes = ['id', 'user_id', 'name', 'role', 'department_id'];
 function signAndSend(user, res, status) {
   const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
     algorithm: 'HS256',
-    expiresIn: 3600,
+    expiresIn: '1d',
   });
 
   res.status(status || 200).json({ status: 'success', user, token });

@@ -6,6 +6,7 @@ const cors = require('cors');
 const compression = require('compression');
 const rateLimit = require('express-rate-limit');
 const userRoutes = require('./routes/user-routes');
+const jobcardRoutes = require('./routes/jobcard');
 const AppError = require('./utils/AppError');
 const globalErrorHandler = require('./controllers/error-controller');
 const verifyToken = require('./controllers/token-verify');
@@ -45,6 +46,7 @@ app.use(verifyToken);
 
 // routes
 app.use('/api/v1/users', userRoutes);
+app.use('/api/v1/jobcards', jobcardRoutes);
 
 //if no routes found
 app.all('*', (req, res, next) => {
