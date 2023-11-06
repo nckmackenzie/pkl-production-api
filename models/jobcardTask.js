@@ -35,10 +35,12 @@ const Jobcardtask = db.define(
     },
     started: {
       type: DataTypes.DATE,
+      timezone: false,
       allowNull: true,
     },
     ended: {
       type: DataTypes.DATE,
+      timezone: false,
       allowNull: true,
     },
     hours_stopped: {
@@ -47,6 +49,11 @@ const Jobcardtask = db.define(
     },
     completed: {
       type: DataTypes.BOOLEAN,
+      allowNull: true,
+    },
+    completed_on: {
+      type: DataTypes.DATE,
+      timezone: false,
       allowNull: true,
     },
     comment: {
@@ -60,6 +67,7 @@ const Jobcardtask = db.define(
     },
     created_at: {
       type: DataTypes.DATE,
+      timezone: false,
       defaultValue: DataTypes.NOW,
     },
   },

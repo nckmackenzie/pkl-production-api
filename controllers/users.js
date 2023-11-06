@@ -20,6 +20,7 @@ const createUser = catchAsync(async (req, res, next) => {
     user_id: req.body.user_id,
     password: req.body.password,
     role: req.body.role,
+    department_id: req.body.department_id ? +req.body.department_id : null,
   });
 
   res.status(201).json({ status: 'success', data: user });

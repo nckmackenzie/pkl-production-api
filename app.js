@@ -7,9 +7,12 @@ const compression = require('compression');
 const rateLimit = require('express-rate-limit');
 const userRoutes = require('./routes/user-routes');
 const jobcardRoutes = require('./routes/jobcard');
+const taskRoutes = require('./routes/task');
+const generalRoutes = require('./routes/index');
 const AppError = require('./utils/AppError');
 const globalErrorHandler = require('./controllers/error-controller');
 const verifyToken = require('./controllers/token-verify');
+
 const app = express();
 
 app.use(cors());
@@ -21,12 +24,12 @@ app.use(helmet());
 
 //limit no of requests
 // Limit requests from same API
-const limiter = rateLimit({
-  max: 100,
-  windowMs: 60 * 60 * 1000,
-  message: 'Too many requests from this IP, please try again in an hour!',
-});
-app.use('/api', limiter);
+// const limiter = rateLimit({
+//   max: 100,
+//   windowMs: 60 * 60 * 1000,
+//   message: 'Too many requests from this IP, please try again in an hour!',
+// });
+// app.use('/api', limiter);
 
 //cookie parser
 app.use(cookieParser());
@@ -46,6 +49,8 @@ app.use(verifyToken);
 // routes
 app.use('/api/v1/users', userRoutes);
 app.use('/api/v1/jobcards', jobcardRoutes);
+app.use('/api/v1/tasks', taskRoutes);
+app.use('/api/v1', generalRoutes);
 
 //if no routes found
 app.all('*', (req, res, next) => {

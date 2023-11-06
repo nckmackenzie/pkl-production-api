@@ -72,7 +72,7 @@ const User = db.define(
   }
 );
 
-User.hasOne(Department, { foreignKey: 'department_id', onDelete: 'RESTRICT' });
+// User.hasOne(Department, { foreignKey: 'department_id', onDelete: 'RESTRICT' });
 
 User.beforeCreate(async user => {
   user.password = await bcrypt.hash(user.password, 12);
